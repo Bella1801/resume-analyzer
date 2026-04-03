@@ -34,7 +34,7 @@ with st.sidebar:
         - 💡 Tips to improve your resume
         """)
 
-# ── Helper Functions ───────────────────────────────────────────────
+# ── Helper Functions ───────────────
 
 def extract_text_from_pdf(uploaded_file):
     try:
@@ -42,7 +42,7 @@ def extract_text_from_pdf(uploaded_file):
         text = ""
         for page in pdf_reader.pages:
             text = text + page.extract_text()
-        return text                              # ✅ outside the loop
+        return text                             
     except Exception as e:
         st.error(f"Error reading PDF: {e}")
         return ""
@@ -56,7 +56,7 @@ def extract_text(uploaded_file):
 def clean_text(text):
     text = text.lower()
     text = re.sub(r'[^a-zA-Z\s]', '', text)
-    text = re.sub(r'\s+', ' ', text).strip()    # ✅ ' ' not '' (keeps spaces)
+    text = re.sub(r'\s+', ' ', text).strip()    
     return text
 
 def remove_stopwords(text):
@@ -66,7 +66,7 @@ def remove_stopwords(text):
 
 def calculate_similarity(resume_text, job_description):
     resume_processed = remove_stopwords(clean_text(resume_text))
-    job_processed = remove_stopwords(clean_text(job_description))  # ✅ job_description not resume_text
+    job_processed = remove_stopwords(clean_text(job_description))  
     vectorizer = TfidfVectorizer()
     tfidf_matrix = vectorizer.fit_transform([resume_processed, job_processed])
     score = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0] * 100
@@ -76,14 +76,14 @@ def get_missing_keywords(resume_processed, job_processed):
     resume_words = set(resume_processed.split())
     job_words = set(job_processed.split())
     missing = job_words - resume_words
-    return list(missing)[:20]                   # top 20 missing keywords
+    return list(missing)[:20]                  
 
 def get_common_keywords(resume_processed, job_processed):
     resume_words = set(resume_processed.split())
     job_words = set(job_processed.split())
     return list(resume_words & job_words)
 
-# ── Main App ───────────────────────────────────────────────────────
+# ── Main App ─────────────────
 
 def main():
     if resume_file and job_file:
@@ -119,12 +119,12 @@ def main():
                 st.success("✅ Great match! Your resume aligns well with the job description.")
 
             # ── Bar Chart ──
-            fig, ax = plt.subplots(figsize=(6, 1))         # ✅ subplots not subplot
-            ax.barh(["Match"], [score], color=color)        # ✅ correct barh syntax
+            fig, ax = plt.subplots(figsize=(6, 1))         
+            ax.barh(["Match"], [score], color=color)        
             ax.set_xlim([0, 100])
             ax.set_xlabel("Match Percentage")
             ax.set_title("Resume Match Score")
-            st.pyplot(fig)                                  # ✅ st.pyplot(fig) not ax.pyplot
+            st.pyplot(fig)                                  
 
             st.divider()
 
