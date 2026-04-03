@@ -66,8 +66,8 @@ So, I built this tool to:
 👉 https://resume-analyzer-jpxdam6zashi8ghporuvvk.streamlit.app/
 
 ---
+<img width="1920" height="944" alt="ai analyzer" src="https://github.com/user-attachments/assets/df3cf384-9ad7-420c-ac1a-a6ec678043c4" />
 
-"C:\Users\RANIKA CHAUHAN\OneDrive\Pictures\Screenshots\ai analyzer.png"
 
 ---
 
